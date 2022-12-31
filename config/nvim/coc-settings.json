@@ -1,0 +1,14 @@
+{
+  "languageserver": {
+    "ruby": {
+      "command": "solargraph",
+      "args": ["stdio"],
+      "rootPatterns": ["Gemfile", ".git"],
+      "filetypes": ["ruby"],
+      "initializationOptions": {
+        "documentFormattingProvider": true
+      }
+    }
+  }
+}
+

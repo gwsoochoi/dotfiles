@@ -1,0 +1,28 @@
+[core]
+  editor = nvim
+  #pager = cat
+
+[user]
+	email = gwsoochoi@gmail.com
+	name = Gwangsoo Choi
+
+[push]
+  default = simple
+
+[color]
+  ui = true
+
+[diff]
+  tool = vimdiff
+  algorithm = histogram
+  compactionHeuristic = true
+
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+  st = status
+  m = merge
+  mm = merge origin/master
+  md = merge origin/develop
+  s = status --short --branch
