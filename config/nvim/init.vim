@@ -3,7 +3,6 @@ Plug 'preservim/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'nanotech/jellybeans.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -17,8 +16,6 @@ set sts=2
 set shiftwidth=2
 set showmatch
 set nofixendofline
-
-colorscheme jellybeans
 
 if has("syntax")
   syntax on
@@ -39,10 +36,10 @@ let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffse
 
 nmap <C-e> :NERDTreeToggle<CR>
 nmap <C-f> :Files<CR>
-nmap <C-g> :GFiles<CR>
-nmap <C-G> :GFiles?<CR>
-nmap <C-b> :Buffers<CR>
-nmap <C-h> :History<CR>
 nmap <C-r> :Rg<CR>
+"nmap <C-g> :GFiles<CR>
+"nmap <C-G> :GFiles?<CR>
+"nmap <C-b> :Buffers<CR>
+"nmap <C-h> :History<CR>
 nmap <C-[> <Plug>AirlineSelectPrevTab
 nmap <C-]> <Plug>AirlineSelectNextTab
