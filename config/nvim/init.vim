@@ -1,7 +1,7 @@
 call plug#begin('~/.vim/plugged')
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 Plug 'preservim/nerdtree'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 call plug#end()
@@ -29,6 +29,9 @@ set mat=2
 
 " Show line number
 set number
+
+"deactive mouse
+set mouse=
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Search Setting
@@ -78,11 +81,9 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'default'
 
-" Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+" fzf
+nnoremap <leader><tab> :GFiles<CR>
+nnoremap <leader>fb :Buffers<CR>
 
 let g:NERDTreeWinPos = "left"
 let g:NERDTreeWinSize = 30
@@ -95,11 +96,10 @@ nnoremap <C-l> <C-w>l
 
 nnoremap <leader>vi :tabe ~/.config/nvim/init.vim<CR>
 nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
-nnoremap <leader>w <ESC><ESC>:w<CR>
-nnoremap <leader>q <ESC><ESC>:q<CR>
-nnoremap <leader>wq <ESC><ESC>:wq<CR>
-nnoremap <leader>s <ESC><ESC>:split<CR>
-nnoremap <leader>v <ESC><ESC>:vsplit<CR>
-nnoremap <leader>pp <ESC><ESC>:PlugInstall<CR>
-nnoremap <leader>ss <ESC><ESC>:nohlsearch<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :bd<CR>
+nnoremap <leader>s :split<CR>
+nnoremap <leader>v :vsplit<CR>
+nnoremap <leader>pp :PlugInstall<CR>
+nnoremap <leader>ss :nohlsearch<CR>
 nnoremap <S-z> :u<CR>
