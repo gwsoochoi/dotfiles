@@ -1,4 +1,5 @@
 call plug#begin('~/.vim/plugged')
+Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
@@ -97,10 +98,8 @@ nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
 nnoremap <leader>w <ESC><ESC>:w<CR>
 nnoremap <leader>q <ESC><ESC>:q<CR>
 nnoremap <leader>wq <ESC><ESC>:wq<CR>
-nnoremap <leader>wq <ESC><ESC>:wq<CR>
-nnoremap <leader>u <ESC><ESC>:u<CR>
 nnoremap <leader>s <ESC><ESC>:split<CR>
 nnoremap <leader>v <ESC><ESC>:vsplit<CR>
-nnoremap <leader>pi <ESC><ESC>:PlugInstall<CR>
-nnoremap <leader>pc <ESC><ESC>:PlugClean<CR>
-nnoremap <leader>nn <ESC><ESC>:nohlsearch<CR>
+nnoremap <leader>pp <ESC><ESC>:PlugInstall<CR>
+nnoremap <leader>ss <ESC><ESC>:nohlsearch<CR>
+nnoremap <S-z> :u<CR>
