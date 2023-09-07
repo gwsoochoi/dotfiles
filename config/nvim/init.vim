@@ -4,11 +4,19 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'lifepillar/vim-solarized8'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-rails'
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   General Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set encoding=utf-8
+set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileformats=unix,dos,mac
 
 " Sets history line
 set history=500
@@ -33,6 +41,8 @@ set number
 "deactive mouse
 set mouse=
 
+"Auto comment out off
+set formatoptions-=r
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Search Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -52,12 +62,11 @@ set incsearch
 "   Color Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Syntax Enable
-syntax on
-
-" Use color scheme 'jellybeans'
-colorscheme jellybeans
-
+" Enable Solarized8 Dark theme
+syntax enable
+set background=dark
+let g:solarized_termtrans = 1 " This gets rid of the grey background
+colorscheme solarized8
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Indent Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -82,24 +91,37 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'default'
 
 " fzf
-nnoremap <leader><tab> :GFiles<CR>
+let $FZF_DEFAULT_COMMAND='find . -type f'
+nnoremap <leader>fz :Files<CR>
+nnoremap <leader>r :Rg<CR>
+nnoremap <leader>ff :GFiles<CR>
 nnoremap <leader>fb :Buffers<CR>
 
 let g:NERDTreeWinPos = "left"
 let g:NERDTreeWinSize = 30
+let NERDTreeShowHidden=1 " Show hide files
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <leader><tab> :NERDTreeToggle<CR>
 
 nnoremap <leader>vi :tabe ~/.config/nvim/init.vim<CR>
 nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :bd<CR>
-nnoremap <leader>s :split<CR>
-nnoremap <leader>v :vsplit<CR>
+nnoremap <leader>[ :split<CR>
+nnoremap <leader>] :vsplit<CR>
 nnoremap <leader>pp :PlugInstall<CR>
 nnoremap <leader>ss :nohlsearch<CR>
 nnoremap <S-z> :u<CR>
+nnoremap <C-]> :bnext<CR>
+nnoremap <C-[> :bprev<CR>
+nnoremap <leader>ww :bd<CR>
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" : "\<Tab>"
+      " \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
