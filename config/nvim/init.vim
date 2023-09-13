@@ -9,6 +9,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-rails'
 Plug 'jiangmiao/auto-pairs'
+Plug 'projekt0n/github-nvim-theme'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -64,7 +65,6 @@ set incsearch
 
 " Enable Solarized8 Dark theme
 syntax enable
-set background=dark
 let g:solarized_termtrans = 1 " This gets rid of the grey background
 colorscheme solarized8
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -85,16 +85,18 @@ set ai
 " Smart Indent
 set si
 
+" Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#buffer_idx_mode = 1 " タブ番号表示
 
 " fzf
 let $FZF_DEFAULT_COMMAND='find . -type f'
-nnoremap <leader>fz :Files<CR>
 nnoremap <leader>r :Rg<CR>
-nnoremap <leader>ff :GFiles<CR>
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fg :GFiles<CR>
 nnoremap <leader>fb :Buffers<CR>
 
 let g:NERDTreeWinPos = "left"
@@ -107,21 +109,38 @@ nnoremap <leader>vi :tabe ~/.config/nvim/init.vim<CR>
 nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :bd<CR>
-nnoremap <leader>[ :split<CR>
-nnoremap <leader>] :vsplit<CR>
+nnoremap <leader>s :split<CR>
+nnoremap <leader>v :vsplit<CR>
 nnoremap <leader>pp :PlugInstall<CR>
 nnoremap <leader>ss :nohlsearch<CR>
 nnoremap <S-z> :u<CR>
-nnoremap <C-]> :bnext<CR>
-nnoremap <C-[> :bprev<CR>
-nnoremap <leader>ww :bd<CR>
+nnoremap <Tab> :bnext<CR>
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
 
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" : "\<Tab>"
-      " \ <SID>check_back_space() ? "\<Tab>" :
+" Coc.nvim
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
+" delays and poor user experience
+set updatetime=300
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
