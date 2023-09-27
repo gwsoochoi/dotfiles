@@ -10,13 +10,16 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-rails'
 Plug 'jiangmiao/auto-pairs'
 Plug 'projekt0n/github-nvim-theme'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   General Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set encoding=utf-8
-set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+"set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileencodings=utf-8
 set fileformats=unix,dos,mac
 
 " Sets history line
@@ -94,10 +97,16 @@ let g:airline#extensions#tabline#buffer_idx_mode = 1 " タブ番号表示
 
 " fzf
 let $FZF_DEFAULT_COMMAND='find . -type f'
-nnoremap <leader>r :Rg<CR>
+noremap <leader>r :Rg<CR>
 nnoremap <leader>ff :Files<CR>
 nnoremap <leader>fg :GFiles<CR>
 nnoremap <leader>fb :Buffers<CR>
+
+" Find files using Telescope command-line sugar.
+" nnoremap <leader>ff <cmd>Telescope find_files<cr>
+" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+" nnoremap <leader>fb <cmd>Telescope buffers<cr>
+" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 let g:NERDTreeWinPos = "left"
 let g:NERDTreeWinSize = 30
@@ -107,7 +116,6 @@ nnoremap <leader><tab> :NERDTreeToggle<CR>
 
 nnoremap <leader>vi :tabe ~/.config/nvim/init.vim<CR>
 nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
-nnoremap <leader>w :w<CR>
 nnoremap <leader>q :bd<CR>
 nnoremap <leader>s :split<CR>
 nnoremap <leader>v :vsplit<CR>
@@ -115,7 +123,9 @@ nnoremap <leader>pp :PlugInstall<CR>
 nnoremap <leader>ss :nohlsearch<CR>
 nnoremap <S-z> :u<CR>
 nnoremap <Tab> :bnext<CR>
-
+nnoremap <leader>w :w<CR>
+nnoremap <leader>tt :%s/ \+$//g<CR>
+nnoremap <F12> :<C-u>%s/\s\+$//<CR>
 
 " Coc.nvim
 " Some servers have issues with backup files, see #649
@@ -135,10 +145,7 @@ set signcolumn=yes
 " no select by `"suggest.noselect": true` in your configuration file
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
+inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice
