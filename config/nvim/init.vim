@@ -125,7 +125,28 @@ nnoremap <S-z> :u<CR>
 nnoremap <Tab> :bnext<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>tt :%s/ \+$//g<CR>
-nnoremap <F12> :<C-u>%s/\s\+$//<CR>
+
+
+"공백제거
+function! s:remove_trailing_spaces() abort
+	let x = @/
+	let w = winsaveview()
+	silent! %s/\s\+$//e  "silent 명령으로 치환 결과를 표시 안함
+	let @/ = x
+	call winrestview(w)
+endfunction
+" 명령으로 정의
+command! -nargs=0 RemoveTrailingSpaces
+			\ call <SID>remove_trailing_spaces()
+" 저장시마다 발동
+augroup TS
+  au!
+  au BufWritePre * RemoveTrailingSpaces
+augroup END
+" 키맵으로 정의해서 원할때마다 실행하려면
+noremap <script><silent> <Plug>(remove_trailing_spaces)
+			\ :<C-u>RemoveTrailingSpaces()<CR>
+nmap <F12> <Plug>(remove_trailing_spaces)
 
 " Coc.nvim
 " Some servers have issues with backup files, see #649
