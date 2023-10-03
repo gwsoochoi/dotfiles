@@ -121,11 +121,17 @@ nnoremap <leader>s :split<CR>
 nnoremap <leader>v :vsplit<CR>
 nnoremap <leader>pp :PlugInstall<CR>
 nnoremap <leader>ss :nohlsearch<CR>
-nnoremap <S-z> :u<CR>
-nnoremap <Tab> :bnext<CR>
 nnoremap <leader>w :w<CR>
-nnoremap <leader>tt :%s/ \+$//g<CR>
 
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> [B :blast<CR>
+
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
 
 "공백제거
 function! s:remove_trailing_spaces() abort
