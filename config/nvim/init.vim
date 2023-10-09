@@ -97,10 +97,10 @@ let g:airline#extensions#tabline#buffer_idx_mode = 1 " タブ番号表示
 
 " fzf
 let $FZF_DEFAULT_COMMAND='find . -type f'
-noremap <leader>r :Rg<CR>
-nnoremap <leader>ff :Files<CR>
-nnoremap <leader>fg :GFiles<CR>
-nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader>r :Rg<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>g :GFiles<CR>
+nnoremap <leader>b :Buffers<CR>
 
 " Find files using Telescope command-line sugar.
 " nnoremap <leader>ff <cmd>Telescope find_files<cr>
