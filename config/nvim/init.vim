@@ -116,7 +116,7 @@ nnoremap <leader><tab> :NERDTreeToggle<CR>
 
 nnoremap <leader>vi :tabe ~/.config/nvim/init.vim<CR>
 nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
-nnoremap <leader>q :bd<CR>
+nnoremap qq :bd<CR>
 nnoremap <leader>s :split<CR>
 nnoremap <leader>v :vsplit<CR>
 nnoremap <leader>pp :PlugInstall<CR>
@@ -128,10 +128,10 @@ nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> [B :blast<CR>
 
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
+" noremap <Up> <Nop>
+" noremap <Down> <Nop>
+" noremap <Left> <Nop>
+" noremap <Right> <Nop>
 
 "공백제거
 function! s:remove_trailing_spaces() abort
