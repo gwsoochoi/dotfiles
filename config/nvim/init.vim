@@ -18,6 +18,7 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rbenv'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-endwise'
+Plug 'craigemery/vim-autotag'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -199,3 +200,7 @@ let g:indentguides_tabchar = '|'
 nnoremap <leader>t :TagbarToggle<CR>
 let g:tagbar_width = 30        " 初期設定はwidth=40なのでちょっと幅とりすぎ。
 let g:tagbar_autoshowtag = 1   ":TagbarShowTag を叩かなくても有効にする
+
+" Ctags
+set tags=./tags;/
+let g:autotagTagsFile=".tags"
