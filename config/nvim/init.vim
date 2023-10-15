@@ -6,13 +6,18 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lifepillar/vim-solarized8'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-rails'
 Plug 'jiangmiao/auto-pairs'
 Plug 'projekt0n/github-nvim-theme'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 Plug 'chrisbra/csv.vim'
+Plug 'thaerkh/vim-indentguides'
+Plug 'majutsushi/tagbar'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rbenv'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-endwise'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -62,6 +67,8 @@ set hlsearch
 
 " Move cursor when searching
 set incsearch
+
+set background=dark
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Color Setting
@@ -117,7 +124,7 @@ nnoremap <leader><tab> :NERDTreeToggle<CR>
 
 nnoremap <leader>vi :tabe ~/.config/nvim/init.vim<CR>
 nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
-nnoremap qq :bd<CR>
+nnoremap <leader>q :bd<CR>
 nnoremap <leader>s :split<CR>
 nnoremap <leader>v :vsplit<CR>
 nnoremap <leader>pp :PlugInstall<CR>
@@ -173,9 +180,22 @@ set signcolumn=yes
 " no select by `"suggest.noselect": true` in your configuration file
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config
+
+" Ruby Support
+let g:coc_global_extensions = ['coc-solargraph']
 inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Indent Guide
+let g:indentguides_spacechar = '┆'
+let g:indentguides_tabchar = '|'
+
+" Tagbar
+nnoremap <leader>t :TagbarToggle<CR>
+let g:tagbar_width = 30        " 初期設定はwidth=40なのでちょっと幅とりすぎ。
+let g:tagbar_autoshowtag = 1   ":TagbarShowTag を叩かなくても有効にする
