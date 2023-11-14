@@ -1,4 +1,6 @@
 call plug#begin('~/.vim/plugged')
+" Plug 'preservim/tagbar'
+" Plug 'tpope/vim-fugitive'
 Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -8,8 +10,6 @@ Plug 'lifepillar/vim-solarized8'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jiangmiao/auto-pairs'
 Plug 'projekt0n/github-nvim-theme'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 Plug 'chrisbra/csv.vim'
 Plug 'thaerkh/vim-indentguides'
 Plug 'majutsushi/tagbar'
@@ -19,6 +19,8 @@ Plug 'tpope/vim-rbenv'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-endwise'
 Plug 'craigemery/vim-autotag'
+" tag 파일을 자동으로 업데이트하는 플러그인 추가
+" Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -53,7 +55,9 @@ set number
 set mouse=
 
 "Auto comment out off
-set formatoptions-=r
+autocmd FileType * setlocal comments-=://
+" set formatoptions-=ro
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Search Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -68,6 +72,9 @@ set hlsearch
 
 " Move cursor when searching
 set incsearch
+
+" Adding new file at end of file
+set nofixeol
 
 set background=dark
 
@@ -94,8 +101,12 @@ set smarttab
 
 " Auto Indent
 set ai
+
 " Smart Indent
 set si
+
+" No set automatically add comment out when add new line
+" set formatoptions-=ro
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
@@ -103,25 +114,33 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#buffer_idx_mode = 1 " $B%?%VHV9fI=<((B
+let g:airline_section_z = '%#warningmsg#%{strftime("%H:%M")}%*'
 
 " fzf
+" Initialize
+"let g:fzf_vim = {}
+"let g:fzf_vim.preview_window = ['hidden,right,50%,<70(up,40%)', 'ctrl-/']
+"let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
+" [Buffers] Jump to the existing window if possible
+" let g:fzf_vim.buffers_jump = 1
+" [[B]Commits] Customize the options used by 'git log':
+" let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+" [Tags] Command to generate tags file
+" let g:fzf_vim.tags_command = 'ctags -R'
+" [Commands] --expect expression for directly executing the command
+" let g:fzf_vim.commands_expect = 'alt-enter,ctrl-x'
+
 let $FZF_DEFAULT_COMMAND='find . -type f'
 nnoremap <leader>r :Rg<CR>
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>g :GFiles<CR>
 nnoremap <leader>b :Buffers<CR>
 
-" Find files using Telescope command-line sugar.
-" nnoremap <leader>ff <cmd>Telescope find_files<cr>
-" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-" nnoremap <leader>fb <cmd>Telescope buffers<cr>
-" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
 let g:NERDTreeWinPos = "left"
 let g:NERDTreeWinSize = 30
 let NERDTreeShowHidden=1 " Show hide files
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-nnoremap <leader><tab> :NERDTreeToggle<CR>
+nnoremap <tab> :NERDTreeToggle<CR>
 
 nnoremap <leader>vi :tabe ~/.config/nvim/init.vim<CR>
 nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
@@ -137,6 +156,8 @@ nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> [B :blast<CR>
 
+nnoremap <F2> :%s/minervadb_development/minervadb_staging/g<CR>
+nnoremap <F3> :%s/minervadb_staging/minervadb_production/g<CR>
 " noremap <Up> <Nop>
 " noremap <Down> <Nop>
 " noremap <Left> <Nop>
