@@ -19,6 +19,7 @@ Plug 'tpope/vim-rbenv'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-endwise'
 Plug 'craigemery/vim-autotag'
+Plug 'ghifarit53/tokyonight-vim'
 " tag 파일을 자동으로 업데이트하는 플러그인 추가
 " Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
@@ -84,8 +85,16 @@ set background=dark
 
 " Enable Solarized8 Dark theme
 syntax enable
-let g:solarized_termtrans = 1 " This gets rid of the grey background
-colorscheme solarized8
+" let g:solarized_termtrans = 1 " This gets rid of the grey background
+" colorscheme solarized8
+" colorscheme onedark
+
+set termguicolors
+
+let g:tokyonight_style = 'night' " available: night, storm
+let g:tokyonight_enable_italic = 1
+
+colorscheme tokyonight
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Indent Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -115,6 +124,7 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#buffer_idx_mode = 1 " $B%?%VHV9fI=<((B
 let g:airline_section_z = '%#warningmsg#%{strftime("%H:%M")}%*'
+let g:airline_theme = "tokyonight"
 
 " fzf
 " Initialize
@@ -223,5 +233,9 @@ let g:tagbar_width = 30        " 初期設定はwidth=40なのでちょっと幅
 let g:tagbar_autoshowtag = 1   ":TagbarShowTag を叩かなくても有効にする
 
 " Ctags
-set tags=./tags;/
-let g:autotagTagsFile=".tags"
+set tags=./tags,tags;/
+" set tags=./tags;/
+" let g:autotagTagsFile=".tags"
+
+" .vimrc 또는 .vim/vimrc 파일에 추가
+" autocmd BufEnter * silent! !ctags -R
