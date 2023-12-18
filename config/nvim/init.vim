@@ -1,6 +1,4 @@
 call plug#begin('~/.vim/plugged')
-" Plug 'preservim/tagbar'
-" Plug 'tpope/vim-fugitive'
 Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -20,8 +18,6 @@ Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-endwise'
 Plug 'craigemery/vim-autotag'
 Plug 'ghifarit53/tokyonight-vim'
-" tag 파일을 자동으로 업데이트하는 플러그인 추가
-" Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -232,10 +228,8 @@ nnoremap <leader>t :TagbarToggle<CR>
 let g:tagbar_width = 30        " 初期設定はwidth=40なのでちょっと幅とりすぎ。
 let g:tagbar_autoshowtag = 1   ":TagbarShowTag を叩かなくても有効にする
 
-" Ctags
-set tags=./tags,tags;/
-" set tags=./tags;/
-" let g:autotagTagsFile=".tags"
+" 시스템 클립보드에 복사
+vnoremap <leader>y "+y
 
-" .vimrc 또는 .vim/vimrc 파일에 추가
-" autocmd BufEnter * silent! !ctags -R
+" Vim이 시작될 때 자동으로 ctags -R 실행
+autocmd VimEnter * silent! !ctags -R
