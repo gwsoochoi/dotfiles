@@ -232,4 +232,5 @@ let g:tagbar_autoshowtag = 1   ":TagbarShowTag を叩かなくても有効にす
 vnoremap <leader>y "+y
 
 " Vim이 시작될 때 자동으로 ctags -R 실행
-autocmd VimEnter * silent! !ctags -R
+" autocmd VimEnter * silent! !ctags -R
+nnoremap <F5> :!ctags -R<CR>
