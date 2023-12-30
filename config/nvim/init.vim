@@ -34,6 +34,7 @@ set mat=2
 set number
 set mouse=
 autocmd FileType * setlocal comments-=://
+syntax enable
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Search Setting
@@ -48,12 +49,12 @@ set background=dark
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Color Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax enable
-set termguicolorc
+set termguicolors
+
 let g:tokyonight_style = 'night' " available: night, storm
 let g:tokyonight_enable_italic = 1
-colorscheme tokyonight
 
+colorscheme tokyonight
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   indent setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
