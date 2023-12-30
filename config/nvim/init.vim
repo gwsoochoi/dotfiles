@@ -49,6 +49,7 @@ set background=dark
 "   Color Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable
+set termguicolorc
 let g:tokyonight_style = 'night' " available: night, storm
 let g:tokyonight_enable_italic = 1
 colorscheme tokyonight
@@ -111,10 +112,14 @@ nnoremap <silent> [B :blast<CR>
 
 nnoremap <F2> :%s/minervadb_development/minervadb_staging/g<CR>
 nnoremap <F3> :%s/minervadb_staging/minervadb_production/g<CR>
+
 " noremap <Up> <Nop>
 " noremap <Down> <Nop>
 " noremap <Left> <Nop>
 " noremap <Right> <Nop>
+
+nnoremap <silent><F5> :!ctags -R<CR>
+vnoremap <leader>y "+y
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   공백제거
@@ -174,8 +179,3 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:indentguides_spacechar = '┆'
 let g:indentguides_tabchar = '|'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   Copy to clipboard
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-vnoremap <leader>y "+y
