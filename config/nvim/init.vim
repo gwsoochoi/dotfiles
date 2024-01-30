@@ -111,8 +111,7 @@ nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> [B :blast<CR>
 
-nnoremap <F2> :%s/minervadb_development/minervadb_staging/g<CR>
-nnoremap <F3> :%s/minervadb_staging/minervadb_production/g<CR>
+nnoremap <F3> :%s/minervadb_development/minervadb_production/g<CR>
 
 " noremap <Up> <Nop>
 " noremap <Down> <Nop>
