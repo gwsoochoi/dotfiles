@@ -34,6 +34,7 @@ set mat=2
 set number
 set mouse=
 autocmd FileType * setlocal comments-=://
+set noswapfile
 syntax enable
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -111,7 +112,7 @@ nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> [B :blast<CR>
 
-nnoremap <F3> :%s/minervadb_development/minervadb_production/g<CR>
+nnoremap <F2> :%s/minervadb_development/minervadb_production/g<CR>
 
 " noremap <Up> <Nop>
 " noremap <Down> <Nop>
@@ -179,3 +180,8 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:indentguides_spacechar = '┆'
 let g:indentguides_tabchar = '|'
+
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
