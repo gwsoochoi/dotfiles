@@ -6,17 +6,12 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jiangmiao/auto-pairs'
-Plug 'projekt0n/github-nvim-theme'
 Plug 'chrisbra/csv.vim'
 Plug 'thaerkh/vim-indentguides'
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rbenv'
-Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
 Plug 'craigemery/vim-autotag'
-Plug 'lifepillar/vim-solarized8'
-Plug 'ghifarit53/tokyonight-vim'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -52,10 +47,7 @@ set background=dark
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
 
-let g:tokyonight_style = 'night' " available: night, storm
-let g:tokyonight_enable_italic = 1
-
-colorscheme tokyonight
+colorscheme jellybeans
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   indent setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -75,7 +67,7 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#buffer_idx_mode = 1 " $B%?%VHV9fI=<((B
 let g:airline_section_z = '%#warningmsg#%{strftime("%H:%M")}%*'
-let g:airline_theme = "tokyonight"
+let g:airline_theme = "jellybeans"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   FZF
@@ -180,8 +172,3 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:indentguides_spacechar = '┆'
 let g:indentguides_tabchar = '|'
-
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
