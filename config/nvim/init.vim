@@ -8,6 +8,10 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'thaerkh/vim-indentguides'
+Plug 'tpope/vim-rails'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'maxmellon/vim-jsx-pretty'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -172,3 +176,8 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:indentguides_spacechar = '┆'
 let g:indentguides_tabchar = '|'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   respond .js
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:jsx_ext_required = 0
