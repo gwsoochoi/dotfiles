@@ -6,12 +6,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jiangmiao/auto-pairs'
-Plug 'chrisbra/csv.vim'
-Plug 'thaerkh/vim-indentguides'
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
-Plug 'craigemery/vim-autotag'
+Plug 'thaerkh/vim-indentguides'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -28,11 +24,15 @@ set showmatch
 set mat=2
 set number
 set mouse=
-autocmd FileType * setlocal comments-=://
 set noswapfile
 syntax enable
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   autocmd
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 자동주석제거
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
 "   Search Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set ignorecase
