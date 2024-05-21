@@ -116,7 +116,29 @@ nnoremap <F2> :%s/minervadb_development/minervadb_production/g<CR>
 " noremap <Right> <Nop>
 
 nnoremap <silent><F5> :!ctags -R<CR>
-vnoremap <leader>y "+y
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  클립보드 복사
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 시각 모드에서 사용할 수 있는 매핑 (<C-u>: 이전에 입력된 내용을 초기화)
+vmap <leader>y :<C-u>call TrimAndCopy()<CR>
+" 일반 모드에서 사용할 수 있는 매핑
+nmap <leader>y :<C-u>call TrimAndCopy()<CR>
+
+" 복사 기능 커스터마이징: 마지막 개행 제거 후 클립보드로 복사
+function! TrimAndCopy()
+  " 현재 v레지스터의 내용을 변수로 저장
+  let l:save_reg = @v
+  " 비주얼모드(gv)로 재진입 후 선택된 텍스트를 v레지스터에 복사(vy)
+  normal! gv"vy
+  " substitute함수를 이용하여 v레지스터의 내용중 마지막 개행 문자를 제거
+  let l:content = substitute(@v, '\n\+$', '', '')
+  " 수정 된 l:content를 시스템 클립보드(@+)에 저장
+  let @+ = l:content
+  " v레지스터에 원래 텍스트를 복원
+  let @v = l:save_reg
+endfunction
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   공백제거
