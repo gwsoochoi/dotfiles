@@ -5,13 +5,16 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'thaerkh/vim-indentguides'
 Plug 'tpope/vim-rails'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+Plug 'tpope/vim-haml'
+Plug 'jiangmiao/auto-pairs'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'elzr/vim-json'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -77,8 +80,8 @@ let g:airline_theme = "jellybeans"
 "   FZF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let $FZF_DEFAULT_COMMAND='find . -type f'
-nnoremap <leader>r :Rg<CR>
-nnoremap <leader>f :Files<CR>
+nnoremap rr :Rg<CR>
+nnoremap ff :Files<CR>
 nnoremap <leader>g :GFiles<CR>
 nnoremap <leader>b :Buffers<CR>
 
@@ -96,7 +99,9 @@ nnoremap <tab> :NERDTreeToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>vi :tabe ~/.config/nvim/init.vim<CR>
 nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
-nnoremap <leader>q :bd<CR>
+nnoremap q <Nop>
+nnoremap <silent>qq :bd<CR>
+nnoremap <silent><leader>q :q!<CR>
 nnoremap <leader>s :split<CR>
 nnoremap <leader>v :vsplit<CR>
 nnoremap <leader>pp :PlugInstall<CR>
@@ -203,3 +208,16 @@ let g:indentguides_tabchar = '|'
 "   respond .js
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:jsx_ext_required = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  Haml Setting
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 자동 인덴트
+autocmd FileType haml setlocal shiftwidth=2 tabstop=2 expandtab
+" 자동 줄바꿈
+autocmd FileType haml setlocal formatoptions+=croql
+autocmd BufRead,BufNewFile *.haml set filetype=haml
+
+
+" Show to double quote
+let g:vim_json_syntax_conceal = 0
