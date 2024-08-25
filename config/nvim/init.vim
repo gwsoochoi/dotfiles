@@ -39,6 +39,8 @@ syntax enable
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 자동주석제거
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" tabsize set 4 for *.java
+autocmd FileType java setlocal tabstop=4 shiftwidth=4 expandtab
 
 "   Search Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
