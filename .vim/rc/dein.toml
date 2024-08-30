@@ -1,0 +1,72 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'tomtom/tcomment_vim'
+
+[[plugins]]
+repo = 'vim-scripts/AnsiEsc.vim'
+
+[[plugins]]
+repo = 'scrooloose/syntastic'
+
+[[plugins]]
+repo = 'terryma/vim-multiple-cursors'
+
+[[plugins]]
+repo = 'christoomey/vim-tmux-navigator'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --all'
+merged = 0
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+depends = 'fzf'
+
+[[plugins]]
+repo = 'rking/ag.vim'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+merged = 0
+rev = 'release'
+hook_add = '''
+  let g:coc_global_extensions = [
+    \ 'coc-css',
+    \ 'coc-diagnostic',
+    \ 'coc-docker',
+    \ 'coc-eslint',
+    \ 'coc-explorer',
+    \ 'coc-fzf-preview',
+    \ 'coc-git',
+    \ 'coc-go',
+    \ 'coc-graphql',
+    \ 'coc-html',
+    \ 'coc-html-css-support',
+    \ 'coc-json',
+    \ 'coc-lists',
+    \ 'coc-lightbulb',
+    \ 'coc-markdown-preview-enhanced',
+    \ 'coc-snippets',
+    \ 'coc-sql',
+    \ 'coc-swagger',
+    \ 'coc-toml',
+    \ 'coc-tsserver',
+    \ 'coc-yaml'
+  \ ]
+'''
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+hook_post_update = 'TSUpdate'
