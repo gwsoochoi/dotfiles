@@ -38,6 +38,9 @@ repo = 'itchyny/lightline.vim'
 repo = 'jiangmiao/auto-pairs'
 
 [[plugins]]
+repo = 'preservim/nerdtree'
+
+[[plugins]]
 repo = 'neoclide/coc.nvim'
 merged = 0
 rev = 'release'
