@@ -1,25 +1,62 @@
-call plug#begin('~/.vim/plugged')
-Plug 'preservim/nerdtree'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'tpope/vim-endwise'
-Plug 'thaerkh/vim-indentguides'
-Plug 'tpope/vim-rails'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
-Plug 'tpope/vim-haml'
-Plug 'jiangmiao/auto-pairs'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'maxmellon/vim-jsx-pretty'
-Plug 'elzr/vim-json'
-call plug#end()
+if &compatible
+ set nocompatible
+endif
+
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""
+" Initialize
+""""""""""""""""""""""""""""""""""""""""""""""
+let $CACHE = expand('~/.cache')
+
+if !isdirectory(expand($CACHE))
+  call mkdir(expand($CACHE), 'p')
+endif
+
+" Load dein.
+let s:dein_dir = finddir('dein.vim', '.;')
+if s:dein_dir != '' || &runtimepath !~ '/dein.vim'
+  if s:dein_dir == '' && &runtimepath !~ '/dein.vim'
+    let s:dein_dir = expand('$CACHE/dein')
+          \. '/repos/github.com/Shougo/dein.vim'
+    if !isdirectory(s:dein_dir)
+      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
+    endif
+  endif
+  execute 'set runtimepath^=' . substitute(
+        \ fnamemodify(s:dein_dir, ':p') , '/$', '', '')
+endif
+
+let g:dein#install_progress_type = 'title'
+let g:dein#enable_notification = 1
+let g:dein#install_log_filename = '~/dein.log'
+
+let s:path = expand('$CACHE/dein')
+if dein#load_state(s:path)
+  call dein#begin(s:path)
+
+  call dein#load_toml('~/.vim/rc/dein.toml', {'lazy': 0})
+  call dein#load_toml('~/.vim/rc/deinlazy.toml', {'lazy' : 1})
+
+  call dein#end()
+  call dein#save_state()
+endif
+
+if dein#check_install()
+  call dein#install()
+endif
+
+" Required:
+silent! filetype plugin indent on
+syntax enable
+filetype detect
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   General Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+language en_US
 set encoding=utf-8
 set fileencodings=utf-8
 set fileformats=unix,dos,mac
@@ -41,7 +78,16 @@ syntax enable
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " tabsize set 4 for *.java
 autocmd FileType java setlocal tabstop=4 shiftwidth=4 expandtab
+" md as markdown instead of modula2
+autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+" ddl, dml as sql
+autocmd BufNewFile,BufRead *.{ddl,dml} set filetype=sql
+" pug
+autocmd BufNewFile,BufRead *.{pug*} set filetype=pug
+" dockerfile
+autocmd BufNewFile,BufRead Dockerfile.{*} set filetype=dockerfile
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Search Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set ignorecase
@@ -57,6 +103,7 @@ set background=dark
 set termguicolors
 
 colorscheme jellybeans
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   indent setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -67,25 +114,39 @@ set expandtab
 set smarttab
 set ai
 set si
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   Airline
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#buffer_idx_mode = 1 " $B%?%VHV9fI=<((B
-let g:airline_section_z = '%#warningmsg#%{strftime("%H:%M")}%*'
-let g:airline_theme = "jellybeans"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   FZF
+"   fzf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let $FZF_DEFAULT_COMMAND='find . -type f'
-nnoremap rr :Rg<CR>
 nnoremap ff :Files<CR>
-nnoremap <leader>g :GFiles<CR>
-nnoremap <leader>b :Buffers<CR>
+nnoremap rr :Rg<CR>
+
+nnoremap <silent> <Leader>a :call fzf#run({
+      \    'sink': 'e',
+      \    'down': '40%'
+      \  })<CR>
+command! -nargs=+ -complete=file AgRaw call fzf#vim#ag_raw(<q-args>)
+command! -nargs=* -complete=file AgPreview :call fzf#vim#ag_raw(<q-args>, fzf#wrap('ag-raw',
+      \ {'options': "--preview 'coderay $(cut -d: -f1 <<< {}) 2> /dev/null | sed -n $(cut -d: -f2 <<< {}),\\$p | head -".&lines."'"}))
+
+nnoremap <silent> <Leader>r :call fzf#run({
+      \ 'source': 'rg --files --hidden --glob "!.git/"',
+      \ 'sink': 'e',
+      \ 'down': '40%'
+      \ })<CR>
+command! -nargs=+ -complete=file RgRaw call fzf#vim#ag_raw(<q-args>, fzf#wrap('rg-raw', {
+      \ 'source': 'rg --vimgrep --no-heading --hidden --glob "!.git/" -- <q-args>',
+      \ 'sink': 'e',
+      \ 'down': '40%',
+      \ 'options': '--preview "bat --style=numbers --color=always {}" --bind "change:reload:rg --vimgrep --no-heading --hidden --glob \!.git/ -- {}"'
+      \ }))<CR>
+command! -nargs=* -complete=file RgPreview :call fzf#vim#ag_raw(<q-args>, fzf#wrap('rg-preview', {
+      \ 'source': 'rg --vimgrep --no-heading --hidden --glob "!.git/" -- <q-args>',
+      \ 'sink': 'e',
+      \ 'down': '40%',
+      \ 'options': '--preview "bat --style=numbers --color=always {1} --line-range {2}:." --delimiter ":" --bind "change:reload:rg --vimgrep --no-heading --hidden --glob \!.git/ -- {q}"'
+      \ }))<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   NERDTree
@@ -97,7 +158,7 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 nnoremap <tab> :NERDTreeToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   Shortcut
+"   Key mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>vi :tabe ~/.config/nvim/init.vim<CR>
 nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
@@ -109,6 +170,8 @@ nnoremap <leader>v :vsplit<CR>
 nnoremap <leader>pp :PlugInstall<CR>
 nnoremap <leader>ss :nohlsearch<CR>
 nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>wq :wq<CR>
 
 nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
@@ -124,8 +187,22 @@ nnoremap <F2> :%s/minervadb_development/minervadb_production/g<CR>
 
 nnoremap <silent><F5> :!ctags -R<CR>
 
+nmap <Space> [Space]
+nnoremap [Space] <Nop>
+
+"Simply escape
+inoremap jj <ESC><Right>
+cnoremap <expr> j getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
+vnoremap <C-j><C-j> <ESC>
+onoremap jj <ESC>
+
+" Windows
+nnoremap s <Nop>
+nnoremap sp :<C-u>split<CR>
+nnoremap vs :<C-u>vsplit<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  클립보드 복사
+" Copy to clipboard
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 시각 모드에서 사용할 수 있는 매핑 (<C-u>: 이전에 입력된 내용을 초기화)
 vmap <leader>y :<C-u>call TrimAndCopy()<CR>
@@ -145,7 +222,6 @@ function! TrimAndCopy()
   " v레지스터에 원래 텍스트를 복원
   let @v = l:save_reg
 endfunction
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   공백제거
@@ -220,6 +296,85 @@ autocmd FileType haml setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FileType haml setlocal formatoptions+=croql
 autocmd BufRead,BufNewFile *.haml set filetype=haml
 
-
 " Show to double quote
 let g:vim_json_syntax_conceal = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  lightline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ 'mode_map': { 'c': 'NORMAL' },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'modified': 'LightLineModified',
+      \   'readonly': 'LightLineReadonly',
+      \   'fugitive': 'LightLineFugitive',
+      \   'filename': 'LightLineFilename',
+      \   'fileformat': 'LightLineFileformat',
+      \   'filetype': 'LightLineFiletype',
+      \   'fileencoding': 'LightLineFileencoding',
+      \   'mode': 'LightLineMode',
+      \ },
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2"},
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3"}
+      \ }
+
+function! LightLineModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightLineReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? "🔒" : ''
+endfunction
+
+function! LightLineFilename()
+  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+endfunction
+
+function! LightLineFugitive()
+  if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+    let branch = fugitive#head()
+    return branch !=# '' ? "".branch : ''
+  endif
+  return ''
+endfunction
+
+function! LightLineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightLineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightLineFileencoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightLineMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  Visualize multibyte space
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! MultibyteSpace()
+  highlight MultibyteSpace cterm=underline ctermfg=lightblue guibg=darkgray
+endfunction
+
+if has('syntax')
+  augroup MultibyteSpace
+    autocmd!
+    autocmd! ColorScheme * call MultibyteSpace()
+    autocmd! VimEnter,WinEnter,BufRead * let w:m1=matchadd('MultibyteSpace', '　')
+  augroup END
+  call MultibyteSpace()
+endif
