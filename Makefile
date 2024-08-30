@@ -10,6 +10,4 @@ install: ## Create symlink to home directory
 	@echo '==> Start to deploy dotfiles to home directory.'
 	@echo ''
 	@$(foreach val, $(DOTFILES), ln -sfnv $(abspath $(val)) $(HOME)/$(val);)
-	@ln -sfnv $(abspath config/nvim/init.vim) ~/.config/nvim/init.vim
-	mkdir -p $(COLORS_DIR)
-	cp jellybeans.vim $(COLORS_DIR)
+	@ln -sfnv $(abspath config/*) ~/.config
