@@ -29,8 +29,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # oh my zsh
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="agnoster"
-
-# on my zsh plugins
 plugins=(
   virtualenv
   git
@@ -46,12 +44,7 @@ source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighti
 # Auto Suggestion
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# zsh-users/zsh-autosuggestions
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6c6c6c"
-
-##########################################
 # fzf
-##########################################
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='find .'
 alias ff="fzf --preview 'cat {}' | xargs nvim"
