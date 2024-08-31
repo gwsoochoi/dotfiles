@@ -271,7 +271,7 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 "   Indent Guide
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:indentLine_color_term = 239
-let g:indentLine_char_list = [c|', '¦', '┆', '┊']
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   respond .js
