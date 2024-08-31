@@ -122,31 +122,22 @@ let $FZF_DEFAULT_COMMAND='find . -type f'
 nnoremap ff :Files<CR>
 nnoremap rr :Rg<CR>
 
-nnoremap <silent> <Leader>a :call fzf#run({
-      \    'sink': 'e',
-      \    'down': '40%'
-      \  })<CR>
-command! -nargs=+ -complete=file AgRaw call fzf#vim#ag_raw(<q-args>)
-command! -nargs=* -complete=file AgPreview :call fzf#vim#ag_raw(<q-args>, fzf#wrap('ag-raw',
-      \ {'options': "--preview 'coderay $(cut -d: -f1 <<< {}) 2> /dev/null | sed -n $(cut -d: -f2 <<< {}),\\$p | head -".&lines."'"}))
+" Initialize configuration dictionary
+let g:fzf_vim = {}
+let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
+let g:fzf_vim.buffers_jump = 1
+let g:fzf_vim.grep_multi_line = 1
+   " PATH:LINE:COL:
+   " LINE
 
-nnoremap <silent> <Leader>r :call fzf#run({
-      \ 'source': 'rg --files --hidden --glob "!.git/"',
-      \ 'sink': 'e',
-      \ 'down': '40%'
-      \ })<CR>
-command! -nargs=+ -complete=file RgRaw call fzf#vim#ag_raw(<q-args>, fzf#wrap('rg-raw', {
-      \ 'source': 'rg --vimgrep --no-heading --hidden --glob "!.git/" -- <q-args>',
-      \ 'sink': 'e',
-      \ 'down': '40%',
-      \ 'options': '--preview "bat --style=numbers --color=always {}" --bind "change:reload:rg --vimgrep --no-heading --hidden --glob \!.git/ -- {}"'
-      \ }))<CR>
-command! -nargs=* -complete=file RgPreview :call fzf#vim#ag_raw(<q-args>, fzf#wrap('rg-preview', {
-      \ 'source': 'rg --vimgrep --no-heading --hidden --glob "!.git/" -- <q-args>',
-      \ 'sink': 'e',
-      \ 'down': '40%',
-      \ 'options': '--preview "bat --style=numbers --color=always {1} --line-range {2}:." --delimiter ":" --bind "change:reload:rg --vimgrep --no-heading --hidden --glob \!.git/ -- {q}"'
-      \ }))<CR>
+" [[B]Commits] Customize the options used by 'git log':
+let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+" [Tags] Command to generate tags file
+let g:fzf_vim.tags_command = 'ctags -R'
+
+" [Commands] --expect expression for directly executing the command
+let g:fzf_vim.commands_expect = 'alt-enter,ctrl-x'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   NERDTree
@@ -279,8 +270,8 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Indent Guide
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:indentguides_spacechar = '┆'
-let g:indentguides_tabchar = '|'
+let g:indentLine_color_term = 239
+let g:indentLine_char_list = [c|', '¦', '┆', '┊']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   respond .js

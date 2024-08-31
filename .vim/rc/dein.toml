@@ -74,3 +74,6 @@ hook_add = '''
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 hook_post_update = 'TSUpdate'
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
