@@ -1,7 +1,6 @@
 CANDIDATES := $(wildcard .??*)
 EXCLUSIONS := .DS_Store .git
 DOTFILES   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
-COLORS_DIR := ~/.config/nvim/colors
 
 list: ## Show dot files in this repo
 	@$(foreach val, $(DOTFILES), ls -dF $(val);)
