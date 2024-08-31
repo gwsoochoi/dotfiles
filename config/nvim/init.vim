@@ -153,23 +153,16 @@ nnoremap <tab> :NERDTreeToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>vi :tabe ~/.config/nvim/init.vim<CR>
 nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
-nnoremap q <Nop>
-nnoremap <silent>qq :bd<CR>
-nnoremap <silent><leader>q :q!<CR>
-nnoremap <leader>s :split<CR>
-nnoremap <leader>v :vsplit<CR>
-nnoremap <leader>pp :PlugInstall<CR>
-nnoremap <leader>ss :nohlsearch<CR>
+nnoremap <leader>ss :cohlsearch<CR>
+nnoremap <silent><leader>bd :bdelete<CR>
 nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q<CR>
+nnoremap <leader>q :q!<CR>
 nnoremap <leader>wq :wq<CR>
 
 nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> [B :blast<CR>
-
-nnoremap <F2> :%s/minervadb_development/minervadb_production/g<CR>
 
 " noremap <Up> <Nop>
 " noremap <Down> <Nop>
@@ -188,9 +181,9 @@ vnoremap <C-j><C-j> <ESC>
 onoremap jj <ESC>
 
 " Windows
-nnoremap s <Nop>
 nnoremap sp :<C-u>split<CR>
 nnoremap vs :<C-u>vsplit<CR>
+nnoremap <leader>s :only<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Copy to clipboard
