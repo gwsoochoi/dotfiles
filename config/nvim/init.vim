@@ -72,22 +72,6 @@ set noswapfile
 syntax enable
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   autocmd
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 자동주석제거
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-" tabsize set 4 for *.java
-autocmd FileType java setlocal tabstop=4 shiftwidth=4 expandtab
-" md as markdown instead of modula2
-autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
-" ddl, dml as sql
-autocmd BufNewFile,BufRead *.{ddl,dml} set filetype=sql
-" pug
-autocmd BufNewFile,BufRead *.{pug*} set filetype=pug
-" dockerfile
-autocmd BufNewFile,BufRead Dockerfile.{*} set filetype=dockerfile
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Search Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set ignorecase
@@ -114,6 +98,22 @@ set expandtab
 set smarttab
 set ai
 set si
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   autocmd
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 자동주석제거
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" tabsize set 4 for *.java
+autocmd FileType java,python setlocal tabstop=4 shiftwidth=4 expandtab
+" md as markdown instead of modula2
+autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+" ddl, dml as sql
+autocmd BufNewFile,BufRead *.{ddl,dml} set filetype=sql
+" pug
+autocmd BufNewFile,BufRead *.{pug*} set filetype=pug
+" dockerfile
+autocmd BufNewFile,BufRead Dockerfile.{*} set filetype=dockerfile
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   fzf
@@ -184,6 +184,9 @@ onoremap jj <ESC>
 nnoremap sp :<C-u>split<CR>
 nnoremap vs :<C-u>vsplit<CR>
 nnoremap <leader>s :only<CR>
+
+" Remove highlight
+nnoremap <leader>s :nohlsearch<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Copy to clipboard
