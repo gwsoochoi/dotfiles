@@ -9,49 +9,94 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""
 " Initialize
 """"""""""""""""""""""""""""""""""""""""""""""
-let $CACHE = expand('~/.cache')
-
-if !isdirectory(expand($CACHE))
-  call mkdir(expand($CACHE), 'p')
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
-" Load dein.
-let s:dein_dir = finddir('dein.vim', '.;')
-if s:dein_dir != '' || &runtimepath !~ '/dein.vim'
-  if s:dein_dir == '' && &runtimepath !~ '/dein.vim'
-    let s:dein_dir = expand('$CACHE/dein')
-          \. '/repos/github.com/Shougo/dein.vim'
-    if !isdirectory(s:dein_dir)
-      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
-    endif
-  endif
-  execute 'set runtimepath^=' . substitute(
-        \ fnamemodify(s:dein_dir, ':p') , '/$', '', '')
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-let g:dein#install_progress_type = 'title'
-let g:dein#enable_notification = 1
-let g:dein#install_log_filename = '~/dein.log'
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | PlugClean | source $MYVIMRC
+\| endif
 
-let s:path = expand('$CACHE/dein')
-if dein#load_state(s:path)
-  call dein#begin(s:path)
+call plug#begin()
 
-  call dein#load_toml('~/.vim/rc/dein.toml', {'lazy': 0})
-  call dein#load_toml('~/.vim/rc/deinlazy.toml', {'lazy' : 1})
+" Any valid git URL is allowed
+Plug 'https://github.com/junegunn/vim-easy-align.git'
 
-  call dein#end()
-  call dein#save_state()
-endif
+" Shorthand notation for GitHub; translates to https://github.com/junegunn/seoul256.vim.git
+Plug 'junegunn/seoul256.vim'
 
-if dein#check_install()
-  call dein#install()
-endif
+" fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
-" Required:
-silent! filetype plugin indent on
+Plug 'junegunn/fzf.vim'"
+
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+Plug 'fatih/vim-go', { 'tag': '*' }
+
+" Using a non-default branch
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+
+" If the vim plugin is in a subdirectory, use 'rtp' option to specify its path
+Plug 'nsf/gocode', { 'rtp': 'vim' }
+
+" On-demand loading: loaded when the specified command is executed
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+
+" On-demand loading: loaded when a file with a specific file type is opened
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Git wrapper for Vim, providing Git commands within Vim
+Plug 'tpope/vim-fugitive'
+
+" Automatically closes Ruby block structures (e.g., `do...end`) in Ruby
+Plug 'tpope/vim-endwise'
+
+" Efficient comment toggling for multiple file types
+Plug 'tomtom/tcomment_vim'
+
+" Displays ANSI escape sequences in color within the terminal
+Plug 'vim-scripts/AnsiEsc.vim'
+
+" Enhanced Ruby support for Vim (syntax highlighting, indenting, etc.)
+Plug 'vim-ruby/vim-ruby'
+
+" Syntax checking and linting for various languages
+Plug 'scrooloose/syntastic'
+
+" Allows multiple cursors for simultaneous editing in Vim
+Plug 'terryma/vim-multiple-cursors'
+
+" Seamless navigation between Vim and tmux panes
+Plug 'christoomey/vim-tmux-navigator'
+
+" Vim integration for 'ag' (The Silver Searcher), a fast search tool
+Plug 'rking/ag.vim'
+
+" Lightweight and highly customizable statusline/tabline plugin for Vim
+Plug 'itchyny/lightline.vim'
+
+" Automatically inserts matching pairs for brackets, quotes, etc.
+Plug 'jiangmiao/auto-pairs'
+
+" File system explorer for Vim, opens in a tree layout
+Plug 'preservim/nerdtree'
+
+" Indent guides for code indentation levels
+Plug 'Yggdroot/indentLine'
+
+call plug#end()
+
+filetype plugin indent on
 syntax enable
-filetype detect
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   General Setting
@@ -69,7 +114,10 @@ set mat=2
 set number
 set mouse=
 set noswapfile
-syntax enable
+set nobackup
+set nowritebackup
+set updatetime=300
+set signcolumn=yes
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Search Setting
@@ -84,10 +132,9 @@ set background=dark
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Color Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set termguicolors
-
-colorscheme jellybeans
-
+silent! colorscheme seoul256
+let g:seoul256_background = 235
+colo seoul256
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   indent setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -164,11 +211,6 @@ nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> [B :blast<CR>
 
-" noremap <Up> <Nop>
-" noremap <Down> <Nop>
-" noremap <Left> <Nop>
-" noremap <Right> <Nop>
-
 nnoremap <silent><F5> :!ctags -R<CR>
 
 nmap <Space> [Space]
@@ -236,32 +278,16 @@ nmap <F12> <Plug>(remove_trailing_spaces)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Coc.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nobackup
-set nowritebackup
-
-" Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
-" delays and poor user experience
-set updatetime=300
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved
-set signcolumn=yes
-
-" Use tab for trigger completion with characters ahead and navigate
-" NOTE: There's always complete item selected by default, you may want to enable
-" no select by `"suggest.noselect": true` in your configuration file
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config
-
-" Ruby Support
-let g:coc_global_extensions = ['coc-solargraph']
-inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Indent Guide
@@ -322,7 +348,7 @@ function! LightLineFilename()
         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
         \  &ft == 'unite' ? unite#get_status_string() :
         \  &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ '' != expand('%:p') ? expand('%:p') : '[No Name]') .
         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
