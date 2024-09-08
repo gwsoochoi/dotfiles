@@ -23,7 +23,7 @@ endif
 
 " Run PlugInstall if there are missing plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \| PlugInstall --sync | PlugClean | source $MYVIMRC
+  \| PlugInstall --sync | source $MYVIMRC
 \| endif
 
 call plug#begin()
@@ -92,6 +92,9 @@ Plug 'preservim/nerdtree'
 
 " Indent guides for code indentation levels
 Plug 'Yggdroot/indentLine'
+
+Plug 'majutsushi/tagbar'
+let g:tagbar_sort = 0
 
 call plug#end()
 
@@ -391,3 +394,8 @@ if has('syntax')
   augroup END
   call MultibyteSpace()
 endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  Tagbar
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap tt :TagbarToggle<CR>
