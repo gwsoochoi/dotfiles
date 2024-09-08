@@ -66,8 +66,7 @@ hook_add = '''
     \ 'coc-swagger',
     \ 'coc-toml',
     \ 'coc-tsserver',
-    \ 'coc-yaml',
-    \ 'coc-java'
+    \ 'coc-yaml'
   \ ]
 '''
 
@@ -77,3 +76,9 @@ hook_post_update = 'TSUpdate'
 
 [[plugins]]
 repo = 'Yggdroot/indentLine'
+
+[[plugins]]
+repo = 'tpope/vim-endwise'
+
+[[plugins]]
+repo = 'Townk/vim-autoclose'
