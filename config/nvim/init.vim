@@ -136,7 +136,7 @@ set background=dark
 "   Color Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 silent! colorscheme seoul256
-let g:seoul256_background = 235
+let g:seoul256_background = 240
 colo seoul256
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   indent setting
@@ -281,6 +281,12 @@ nmap <F12> <Plug>(remove_trailing_spaces)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Coc.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Function to check if the character before the cursor is a space
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return col == 0 || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ CheckBackspace() ? "\<Tab>" :
