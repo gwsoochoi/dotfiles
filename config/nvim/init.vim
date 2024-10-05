@@ -130,13 +130,12 @@ set smartcase
 set hlsearch
 set incsearch
 set nofixeol
-set background=dark
+set background=light
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Color Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-silent! colorscheme seoul256
-let g:seoul256_background = 240
+let g:seoul256_background = 253
 colo seoul256
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   indent setting
