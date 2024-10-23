@@ -130,13 +130,14 @@ set smartcase
 set hlsearch
 set incsearch
 set nofixeol
-set background=light
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Color Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:seoul256_background = 253
+let g:seoul256_srgb = 1
+let g:seoul256_background = 236
 colo seoul256
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   indent setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -202,7 +203,7 @@ nnoremap <tab> :NERDTreeToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>vi :tabe ~/.config/nvim/init.vim<CR>
 nnoremap <leader>src :source ~/.config/nvim/init.vim<CR>
-nnoremap <leader>ss :cohlsearch<CR>
+nnoremap <leader>ss :nohlsearch<CR>
 nnoremap <silent><leader>bd :bdelete<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q!<CR>
@@ -230,7 +231,7 @@ nnoremap vs :<C-u>vsplit<CR>
 nnoremap <leader>s :only<CR>
 
 " Remove highlight
-nnoremap <leader>s :nohlsearch<CR>
+nnoremap <leader>s :nohlsearch<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Copy to clipboard
@@ -324,7 +325,7 @@ let g:vim_json_syntax_conceal = 0
 "  lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
+      \ 'colorscheme': 'one',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
@@ -352,11 +353,12 @@ function! LightLineReadonly()
 endfunction
 
 function! LightLineFilename()
+  let filename = expand('%:.')
   return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
         \  &ft == 'unite' ? unite#get_status_string() :
         \  &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ '' != expand('%:p') ? expand('%:p') : '[No Name]') .
+        \ '' != filename ? filename : '[No Name]') .
         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
