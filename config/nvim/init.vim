@@ -136,7 +136,7 @@ set nofixeol
 "   Color Setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:seoul256_srgb = 1
-let g:seoul256_background = 236
+let g:seoul256_background = 239
 colo seoul256
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
