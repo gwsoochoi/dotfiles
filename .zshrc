@@ -42,7 +42,7 @@ source $ZSH/oh-my-zsh.sh
 source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Auto Suggestion
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -55,3 +55,7 @@ alias ff="fzf --preview 'cat {}' | xargs nvim"
 alias ls="ls -GF"
 alias diff="colordiff -u"
 alias vim="nvim"
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
