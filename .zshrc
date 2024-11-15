@@ -28,7 +28,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # oh my zsh
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="agnoster"
+ZSH_THEME="robbyrussell"
 plugins=(
   virtualenv
   git
@@ -38,24 +38,64 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# Syntax Hightlighting
-source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # Auto Suggestion
 source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+# Auto Syntax Highlighting
+source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
+# Color
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#817e7f'
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='find .'
 alias ff="fzf --preview 'cat {}' | xargs nvim"
 
+# rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# nodevn
+eval $(/opt/homebrew/bin/brew shellenv)
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init -)"
+export PATH=$PATH:/Users/gwangsoochoi/.nodenv/versions/20.9.0/bin
+
+# pyenv
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
 ##########################################
-# Alias settings
+# Basic Alias Configuration
 ##########################################
 alias ls="ls -GF"
 alias diff="colordiff -u"
 alias vim="nvim"
-export PATH="$HOME/.nodenv/bin:$PATH"
-eval "$(nodenv init -)"
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+
+# .dotfiles
+alias dotfiles="/Users/gwangsoochoi/dotfiles"
+
+# Google Cloud Host
+alias gcphost="vim ~/.ssh/google_compute_known_hosts"
+
+# Tmux config
+alias tmuxconfig="nvim /Users/gwangsoochoi/dotfiles/.tmux.config"
+
+# Git
+alias gcb='git branch | fzf | cut -c 3- | xargs git checkout'
+
+alias vimconfig='vim ~/.config/nvim/init.vim'
+
+alias zshconfig='vim ~/.zshrc'
+
+export PATH="/opt/homebrew/opt/mysql@8.4/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/gwangsoochoi/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/gwangsoochoi/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/gwangsoochoi/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/gwangsoochoi/google-cloud-sdk/completion.zsh.inc'; fi
