@@ -90,10 +90,10 @@ Plug 'jiangmiao/auto-pairs'
 " File system explorer for Vim, opens in a tree layout
 Plug 'preservim/nerdtree'
 
-" Indent guides for code indentation levels
-Plug 'Yggdroot/indentLine'
-
 Plug 'majutsushi/tagbar'
+
+Plug 'nathanaelkane/vim-indent-guides'
+
 let g:tagbar_sort = 0
 
 call plug#end()
@@ -302,8 +302,10 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Indent Guide
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:indentLine_color_term = 239
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   respond .js

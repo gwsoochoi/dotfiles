@@ -1,6 +1,6 @@
 [core]
   editor = nvim
-	pager = cat
+  #pager = cat
 
 [user]
 	email = gwsoochoi@gmail.com
