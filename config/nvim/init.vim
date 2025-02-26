@@ -56,9 +56,8 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'moll/vim-node'
-Plug 'Mofiqul/vscode.nvim'
-Plug 'olivercederborg/poimandres.nvim'
-Plug 'tomasiser/vim-code-dark'
+Plug 'junegunn/seoul256.vim'
+
 let g:tagbar_sort = 0
 call plug#end()
 
@@ -87,11 +86,8 @@ set updatetime=300
 set signcolumn=yes
 set endofline
 
-" colorscheme catppuccin-mocha
-" colorscheme vscode
-set t_Co=256
-set t_ut=
-colorscheme codedark
+let g:seoul256_background = 235
+colo seoul256
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Search Setting
