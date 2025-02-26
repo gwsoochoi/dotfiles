@@ -58,6 +58,7 @@ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'moll/vim-node'
 Plug 'Mofiqul/vscode.nvim'
 Plug 'olivercederborg/poimandres.nvim'
+Plug 'tomasiser/vim-code-dark'
 let g:tagbar_sort = 0
 call plug#end()
 
@@ -87,7 +88,10 @@ set signcolumn=yes
 set endofline
 
 " colorscheme catppuccin-mocha
-colorscheme vscode
+" colorscheme vscode
+set t_Co=256
+set t_ut=
+colorscheme codedark
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Search Setting
