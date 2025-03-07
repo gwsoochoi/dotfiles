@@ -147,7 +147,7 @@ let g:fzf_vim.commands_expect = 'alt-enter,ctrl-x'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   NERDTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinPos = "left"
 let g:NERDTreeWinSize = 42
 let NERDTreeShowHidden=1 " Show hide files
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
